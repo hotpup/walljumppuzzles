@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isRunning;
     private bool isGrounded;
     private bool onWall;
-
+    private bool pass = false;
+    
     // Update is called once per frame
     void Update()
     {
@@ -73,8 +74,12 @@ public class PlayerMovement : MonoBehaviour
             onWall = true; 
         }
 
-        if(other.gameObject.tag == "Door") {
+        if(other.gameObject.tag == "Door" &&  pass) {
             // change scene
+        }
+
+        if(other.gameObject.tag == "Key") {
+            pass = true;
         }
     }
 
