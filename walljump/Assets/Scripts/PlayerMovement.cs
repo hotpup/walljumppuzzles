@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private string[] sceneNames;
 
     void Start() {
-        sceneNames = new string[] {"1", "2", "3"};
+        sceneNames = new string[] {"1", "2", "3", "4"};
     }
     
     // Update is called once per frame
@@ -90,6 +90,10 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "Key") {
             pass = true;
         }
+
+        if(other.gameObject.tag == "Enemy") {
+            SceneManager.LoadScene(sceneNames[sceneIndex]); 
+        }
     }
 
     void OnCollisionExit2D(Collision2D other)
@@ -101,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Restart() {
         if(Input.GetKeyDown(KeyCode.R)) {
-            if(sceneIndex == 2) {
+            if(sceneIndex == sceneNames.Length - 1) {
                 sceneIndex = 0;
             }
             SceneManager.LoadScene(sceneNames[sceneIndex]); 
