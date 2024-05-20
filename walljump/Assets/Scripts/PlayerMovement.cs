@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,10 +17,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool onWall;
     private bool pass = false;
+    private static int sceneIndex = 0;
+    private string[] sceneNames;
+
+    void Start() {
+        sceneNames = new string[] {"1", "2", "3"};
+    }
     
     // Update is called once per frame
     void Update()
     {
+        Restart();
+
         if(Input.GetKeyDown(KeyCode.Space)) {
             if(isGrounded) {
                 myRigidbody.velocity = Vector2.up * 7;
@@ -75,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(other.gameObject.tag == "Door" &&  pass) {
-            // change scene
+            LoadScene();
         }
 
         if(other.gameObject.tag == "Key") {
@@ -87,6 +96,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.tag == "Wall") {
             onWall = false;
+        }
+    }
+
+    private void Restart() {
+        if(Input.GetKeyDown(KeyCode.R)) {
+            if(sceneIndex == 2) {
+                sceneIndex = 0;
+            }
+            SceneManager.LoadScene(sceneNames[sceneIndex]); 
+        }
+    }
+
+    private void LoadScene() {
+        if(sceneIndex < sceneNames.Length) {
+            sceneIndex++;
+            SceneManager.LoadScene(sceneNames[sceneIndex]);
         }
     }
 
